@@ -4,15 +4,19 @@ const port = 5000
 const bodyParser = require('body-parser');
 const { User } = require("./models/User");
 const config = require('./config/key');
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 
 //application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));
 
 //application/json
 app.use(bodyParser.json());
+console.log(process.env.DATABASE_URL);
+console.log('config', config.mongoURI)
 
 const mongoose = require('mongoose')
-mongoose.connect(config.MONGO_URI, {
+mongoose.connect('mongodb+srv://Administrator:admin@gyuplate.wtrhg.mongodb.net/test?retryWrites=true&w=majority', {
     useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
 }).then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err))
